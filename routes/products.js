@@ -1,9 +1,16 @@
 const express = require("express");
+const Product = require("../models/product");
 
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.status(200).send("welcome to root products");
+  Product.fetchAllProducts((products) => {
+    res.status(200).render("shop/index", {
+      pageTitle: "products",
+      path: "/",
+      prods: products,
+    });
+  });
 });
 
 router.get("/:id", (req, res) => {
