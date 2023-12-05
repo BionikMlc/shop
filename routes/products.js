@@ -5,9 +5,9 @@ const router = express.Router();
 
 router.get("/", (req, res) => {
   Product.fetchAllProducts((products) => {
-    res.status(200).render("shop/index", {
+    res.status(200).render("shop/product-list", {
       pageTitle: "products",
-      path: "/",
+      path: "/products",
       prods: products,
     });
   });
@@ -15,7 +15,16 @@ router.get("/", (req, res) => {
 
 router.get("/:id", (req, res) => {
   const { id } = req.params;
-  res.status(200).send(`your id is ${id}`);
+  Product.findById(id, (foundProduct) => {
+    if (foundProduct) {
+      return res.status(200).render("shop/product-detail", {
+        pageTitle: foundProduct.title,
+        path: "/products",
+        product: foundProduct,
+      });
+    }
+    res.status(404).redirect("/404");
+  });
 });
 
 router.post("/:id", (req, res) => {});

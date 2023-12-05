@@ -3,6 +3,7 @@ const path = require("path");
 
 const { product } = require("./consts/routes");
 const productsRoutes = require("./routes/products");
+const homeRoutes = require("./routes/home");
 
 const notFoundController = require("./controllers/404");
 
@@ -13,6 +14,7 @@ const PORT = 3000;
 server.use(express.static(path.join(__dirname, "public")));
 
 server.use(product, productsRoutes);
+server.use(homeRoutes);
 
 //ejs setup
 //sets server engine

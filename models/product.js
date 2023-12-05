@@ -26,7 +26,12 @@ module.exports = class product {
   }
   save() {}
 
-  static findById() {}
+  static findById(id, callback) {
+    getProductsFromFile((products) => {
+      const product = products?.find((product) => product.id === id);
+      callback(product);
+    });
+  }
 
   static deleteById() {}
 
