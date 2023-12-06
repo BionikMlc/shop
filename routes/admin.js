@@ -2,6 +2,15 @@ const express = require("express");
 const Product = require("../models/product");
 const router = express.Router();
 
+router.get("/product", (req, res, next) => {
+  Product.fetchAllProducts((products) => {
+    res.status(200).render("admin/products", {
+      pageTitle: "admin products",
+      path: "/admin/product",
+      prods: products,
+    });
+  });
+});
 router.get("/product/add", (req, res, next) => {
   res.status(200).render("admin/edit-product", {
     pageTitle: "admin products",
@@ -14,6 +23,12 @@ router.post("/product/add", (req, res, next) => {
   const product = new Product(null, title, imageUrl, description, price);
   product.save();
   res.redirect("/");
+});
+router.post("/product/delete", (req, res, next) => {
+  const { productId } = req.body;
+
+  Product.deleteById(productId);
+  res.redirect("/admin/product");
 });
 
 module.exports = router;
