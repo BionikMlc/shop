@@ -1,6 +1,6 @@
 const fs = require("fs");
 const path = require("path");
-
+const { generateRandomId } = require("../util/index");
 const logFilePath = path.join(
   path.dirname(require.main.filename),
   "log",
@@ -24,7 +24,27 @@ module.exports = class product {
     this.price = price;
     this.description = description;
   }
-  save() {}
+  save() {
+    getProductsFromFile((products) => {
+      const product = products.find((p) => p.id === this.id);
+      if (product) {
+        const productIndex = products.findIndex((p) => p.id === this.id);
+      } else {
+        products.push({
+          id: generateRandomId(),
+          title: this.title,
+          imageUrl: this.imageUrl,
+          description: this.description,
+          price: this.price,
+        });
+        fs.writeFile(logFilePath, JSON.stringify(products), (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+      }
+    });
+  }
 
   static findById(id, callback) {
     getProductsFromFile((products) => {
