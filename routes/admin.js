@@ -24,6 +24,27 @@ router.post("/product/add", (req, res, next) => {
   product.save();
   res.redirect("/");
 });
+router.get("/product/edit/:id", (req, res, next) => {
+  const { id } = req.params;
+  Product.fetchAllProducts((products) => {
+    const productData = products.find((p) => p.id === id);
+    res.status(200).render("admin/edit-product", {
+      pageTitle: "admin products",
+      path: "/admin/product/add",
+      editing: true,
+      product: productData,
+    });
+  });
+});
+router.post("/product/edit", (req, res, next) => {
+  const { productId, title, price, description, imageUrl } = req.body;
+  Product.fetchAllProducts((products) => {
+    const product = new Product(productId, title, imageUrl, description, price);
+    product.save();
+    res.redirect("/");
+  });
+});
+
 router.post("/product/delete", (req, res, next) => {
   const { productId } = req.body;
 

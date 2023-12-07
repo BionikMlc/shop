@@ -29,6 +29,18 @@ module.exports = class product {
       const product = products.find((p) => p.id === this.id);
       if (product) {
         const productIndex = products.findIndex((p) => p.id === this.id);
+        products[productIndex] = {
+          id: this.id,
+          title: this.title,
+          imageUrl: this.imageUrl,
+          description: this.description,
+          price: this.price,
+        };
+        fs.writeFile(logFilePath, JSON.stringify(products), (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
       } else {
         products.push({
           id: generateRandomId(),
