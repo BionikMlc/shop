@@ -2,9 +2,10 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const path = require("path");
 
-const { product, admin } = require("./consts/paths");
+const { product, admin, cart } = require("./consts/paths");
 const productsRoutes = require("./routes/products");
 const adminRoutes = require("./routes/admin");
+const cartRoutes = require("./routes/cart");
 const indexRoute = require("./controllers/home");
 
 const notFoundController = require("./controllers/404");
@@ -18,6 +19,7 @@ server.use(express.static(path.join(__dirname, "public")));
 
 server.use(product, productsRoutes);
 server.use(admin, adminRoutes);
+server.use(cart, cartRoutes);
 server.use(indexRoute);
 
 //ejs setup
