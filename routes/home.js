@@ -1,16 +1,8 @@
 const express = require("express");
-const Product = require("../models/product");
+const homeController = require("../controllers/home");
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
-  Product.fetchAllProducts((products) => {
-    res.status(200).render("shop/index", {
-      pageTitle: "shop",
-      path: "/",
-      prods: products,
-    });
-  });
-});
+router.get("/", homeController);
 
 module.exports = router;
