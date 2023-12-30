@@ -1,4 +1,6 @@
+require("dotenv").config();
 const express = require("express");
+const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const path = require("path");
 
@@ -11,7 +13,7 @@ const indexRoute = require("./controllers/home");
 const notFoundController = require("./controllers/404");
 
 const server = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 server.use(bodyParser.urlencoded({ extended: false }));
 // Set up the static file server
@@ -32,4 +34,16 @@ server.set("views", "views");
 
 server.use(notFoundController.get404);
 
-server.listen(PORT, () => console.log(`server started on port: ${PORT}`));
+const start = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+
+    console.log("Connected to MongoDb");
+  } catch (err) {
+    console.error(err);
+  }
+
+  server.listen(PORT, () => console.log(`server started on port: ${PORT}`));
+};
+
+start();
