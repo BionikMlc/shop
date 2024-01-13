@@ -1,13 +1,21 @@
 const Product = require("../models/schemas/product");
 const Cart = require("../models/schemas/cart");
 
+const calculateTotalPrice = (products) => {
+  let total = 0;
+  products.forEach((item) => {
+    total = total + item.product.price * item.quantity;
+  });
+  return total;
+};
+
 exports.getCart = (req, res, next) => {
   Cart.findById(process.env.CART_ID).then((cart) => {
     res.status(200).render("shop/cart", {
       pageTitle: "cart",
       path: "/cart",
       products: cart.products,
-      totalPrice: 0,
+      totalPrice: calculateTotalPrice(cart.products),
     });
   });
 };
