@@ -22,7 +22,7 @@ server.use(express.static(path.join(__dirname, "public")));
 server.use(product, productsRoutes);
 server.use(admin, adminRoutes);
 server.use(cart, cartRoutes);
-server.use(indexRoute);
+server.get("/", indexRoute);
 
 //ejs setup
 //sets server engine
