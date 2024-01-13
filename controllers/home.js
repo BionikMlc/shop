@@ -1,7 +1,7 @@
-const Product = require("../models/product");
+const Product = require("../models/schemas/product");
 
 const homeController = (req, res) => {
-  Product.fetchAllProducts((products) => {
+  Product.find().then((products) => {
     res.status(200).render("shop/index", {
       pageTitle: "shop",
       path: "/",
