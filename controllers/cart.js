@@ -38,7 +38,6 @@ exports.addToCart = (req, res, next) => {
 
 exports.deleteFromCart = (req, res, next) => {
   const { productId } = req.body;
-  console.log("first", productId);
   req.user.deleteFromCart(productId).then(() => {
     res.redirect("/cart");
   });
