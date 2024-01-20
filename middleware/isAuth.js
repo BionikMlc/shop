@@ -8,15 +8,17 @@ module.exports = (req, res, next) => {
   if (req.cookies?.token) {
     try {
       const decodedToken = jwt.verify(req.cookies?.token, process.env.JWT_KEY);
-      console.log(decodedToken);
       User.findById(decodedToken.userId).then((user) => {
         if (user) {
           res.locals.isAdmin = user.isAdmin;
+          req.user = user;
         }
         next();
       });
     } catch (err) {
       console.log(err);
+      res.clearCookie("token");
+      res.redirect("/");
     }
   } else {
     next();
