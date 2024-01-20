@@ -11,6 +11,7 @@
           >Products</a
         >
       </li>
+      <% if (isAuthenticated) { %>
       <li class="main-header__item">
         <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
       </li>
@@ -19,7 +20,7 @@
           >Orders</a
         >
       </li>
-      <% if (isAdmin) { %>
+      <% } %> <% if (isAdmin) { %>
       <li class="main-header__item">
         <a
           class="<%= path === '/admin/product/add' ? 'active' : '' %>"
@@ -69,6 +70,7 @@
         >Products</a
       >
     </li>
+    <% if (isAuthenticated) { %>
     <li class="mobile-nav__item">
       <a class="<%= path === '/cart' ? 'active' : '' %>" href="/cart">Cart</a>
     </li>
@@ -77,7 +79,7 @@
         >Orders</a
       >
     </li>
-    <% if (isAdmin) { %>
+    <% } %> <% if (isAdmin) { %>
     <li class="mobile-nav__item">
       <a
         class="<%= path === '/admin/add-product' ? 'active' : '' %>"

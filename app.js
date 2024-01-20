@@ -11,7 +11,7 @@ const adminRoutes = require("./routes/admin");
 const cartRoutes = require("./routes/cart");
 const authRoutes = require("./routes/auth");
 const indexRoute = require("./controllers/home");
-const authMiddleware = require("./middleware/isAuth");
+const { authenticate } = require("./middleware/isAuth");
 
 const notFoundController = require("./controllers/404");
 
@@ -22,7 +22,7 @@ server.use(bodyParser.urlencoded({ extended: false }));
 server.use(cookieParser());
 // Set up the static file server
 server.use(express.static(path.join(__dirname, "public")));
-server.use(authMiddleware);
+server.use(authenticate);
 
 server.use(product, productsRoutes);
 server.use(admin, adminRoutes);

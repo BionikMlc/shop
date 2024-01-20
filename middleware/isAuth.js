@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const User = require("../models/schemas/user");
 
-module.exports = (req, res, next) => {
+exports.authenticate = (req, res, next) => {
   res.locals.errorMessage = "";
   res.locals.isAuthenticated = req.cookies?.token;
   res.locals.isAdmin = false;
@@ -22,5 +22,12 @@ module.exports = (req, res, next) => {
     }
   } else {
     next();
+  }
+};
+exports.isLoggedin = (req, res, next) => {
+  if (req.user) {
+    next();
+  } else {
+    res.redirect("/auth/login");
   }
 };
