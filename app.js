@@ -11,6 +11,7 @@ const adminRoutes = require("./routes/admin");
 const cartRoutes = require("./routes/cart");
 const authRoutes = require("./routes/auth");
 const indexRoute = require("./controllers/home");
+
 const { authenticate } = require("./middleware/auth");
 
 const notFoundController = require("./controllers/404");
